@@ -83,7 +83,7 @@ abstract class AbstractAggregator implements AggregatorInterface
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return $this->getTotal()->getTotalExecutions();
     }

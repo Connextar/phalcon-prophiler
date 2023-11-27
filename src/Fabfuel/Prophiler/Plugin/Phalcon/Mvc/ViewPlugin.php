@@ -33,6 +33,11 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
         View::LEVEL_MAIN_LAYOUT => 'main'
     ];
 
+    public function getActiveRenderPathFromArray(ViewInterface $view)
+    {
+        return is_array($view->getActiveRenderPath()) ? current($view->getActiveRenderPath()) : $view->getActiveRenderPath();
+    }
+
     /**
      * Start view benchmark
      *
@@ -41,9 +46,9 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function beforeRenderView(Event $event, ViewInterface $view)
     {
-        $name = get_class($event->getSource()) . '::render: ' . basename($view->getActiveRenderPath());
+        $name = get_class($event->getSource()) . '::render: ' . basename($this->getActiveRenderPathFromArray($view));
         $metadata = [
-            'view' => realpath($view->getActiveRenderPath()) ?: $view->getActiveRenderPath(),
+            'view' => realpath($this->getActiveRenderPathFromArray($view)) ?: $this->getActiveRenderPathFromArray($view),
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
 
@@ -92,7 +97,7 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function setBenchmark(ViewInterface $view, BenchmarkInterface $benchmark)
     {
-        $this->benchmarks[md5($view->getActiveRenderPath())][] = $benchmark;
+        $this->benchmarks[md5($this->getActiveRenderPathFromArray($view))][] = $benchmark;
     }
 
     /**
@@ -101,7 +106,7 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function getBenchmark(ViewInterface $view)
     {
-        return array_shift($this->benchmarks[md5($view->getActiveRenderPath())]);
+        return array_shift($this->benchmarks[md5($this->getActiveRenderPathFromArray($view))]);
     }
 
     /**
@@ -110,6 +115,6 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function getIdentifier(ViewInterface $view)
     {
-        return md5($view->getActiveRenderPath());
+        return md5($this->getActiveRenderPathFromArray($view));
     }
 }

@@ -171,7 +171,7 @@ class Profiler implements ProfilerInterface
      *
      * @return int Total number of benchmarks
      */
-    public function count()
+    public function count(): int
     {
         return count($this->benchmarks);
     }
@@ -179,9 +179,9 @@ class Profiler implements ProfilerInterface
     /**
      * Return the current benchmark
      *
-     * @return BenchmarkInterface|bool
+     * @return BenchmarkInterface|mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->benchmarks);
     }
@@ -191,7 +191,7 @@ class Profiler implements ProfilerInterface
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         next($this->benchmarks);
     }
@@ -199,9 +199,9 @@ class Profiler implements ProfilerInterface
     /**
      * Return the key of the current Benchmark
      *
-     * @return string
+     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->benchmarks);
     }
@@ -211,7 +211,7 @@ class Profiler implements ProfilerInterface
      *
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         $key = key($this->benchmarks);
 
@@ -227,7 +227,7 @@ class Profiler implements ProfilerInterface
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->benchmarks);
     }

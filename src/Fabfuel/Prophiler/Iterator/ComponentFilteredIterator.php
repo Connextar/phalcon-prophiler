@@ -42,7 +42,7 @@ class ComponentFilteredIterator extends \FilterIterator implements \Countable
      *
      * @return bool
      */
-    public function accept()
+    public function accept(): bool
     {
         if ($this->current()->getComponent() !== $this->component) {
             return false;
@@ -80,7 +80,7 @@ class ComponentFilteredIterator extends \FilterIterator implements \Countable
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count(iterator_to_array($this));
     }
